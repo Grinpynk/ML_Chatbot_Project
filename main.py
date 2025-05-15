@@ -5,6 +5,7 @@
 
 import streamlit as st
 from transformers import AutoModelForQuestionAnswering, AutoTokenizer, pipeline
+from requests.exceptions import HTTPError
 
 st.title('Чат-бот на основе ML (Hugging Face Transformers)')
 
@@ -35,5 +36,7 @@ if user_question and context_text:
         st.error('Ошибка: не удалось загрузить модель. Попробуйте позже.')
     except KeyError:
         st.error('Ошибка: проблема с обработкой ответа. Попробуйте изменить вопрос.')
+    except HTTPError:
+        st.error('Ошибка сети: проверьте подключение к Интернету.')
 else:
     st.info('Пожалуйста, введите вопрос и контекст для получения ответа.')
