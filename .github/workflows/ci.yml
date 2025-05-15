@@ -13,28 +13,22 @@ jobs:
         with:
           python-version: 3.9
       
-      - name: Debugging Environment Setup
+      - name: Create Virtual Environment
         run: |
-          set -eux  # Включаем полную отладку
-          echo "Проверка версии Python:"
-          python --version
-          echo "Проверка пути pip:"
-          which pip
-          echo "Проверка версии pip:"
-          pip --version
-          echo "Проверка переменных окружения:"
-          env
-      
-      - name: Install Dependencies
-        run: |
-          set -eux  # Включаем полную отладку
+          python -m venv venv
+          source venv/bin/activate
           python -m pip install --upgrade pip setuptools wheel  # Обновление pip, setuptools и wheel
-          python -m pip install --upgrade numpy==1.21.6  # Совместимая версия numpy
-          python -m pip install -r requirements.txt
+      
+      - name: Install Dependencies with Legacy Resolver
+        run: |
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install numpy==1.18.0  # Совместимая версия numpy
+          python -m pip install -r requirements.txt --use-deprecated=legacy-resolver
       
       - name: Verify Installed Packages
         run: |
-          set -eux  # Включаем полную отладку
+          source venv/bin/activate
           python --version
           pip list
           python -m pytest --version
@@ -42,10 +36,10 @@ jobs:
       
       - name: Run Unit Tests
         run: |
-          set -eux  # Включаем полную отладку
+          source venv/bin/activate
           python -m pytest tests  # Явный запуск через python -m
       
       - name: Run Lint (PEP8)
         run: |
-          set -eux  # Включаем полную отладку
+          source venv/bin/activate
           python -m pylint main.py
