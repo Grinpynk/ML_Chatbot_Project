@@ -1,25 +1,24 @@
-
 name: CI
 
 on: [push, pull_request]
 
 jobs:
-test:
-runs-on: ubuntu-latest
-steps:
-- uses: actions/checkout@v3
-- name: Set up Python
-uses: actions/setup-python@v4
-with:
-python-version: 3.9
-- name: Install dependencies
-run: |
-pip install -r requirements.txt
-pip install pytest # Добавлено
-- name: Run unit tests
-run: pytest tests
-- name: Lint with PEP8
-run: pylint main.py
-
-
-    
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest  # Установка pytest явно
+      - name: Verify pytest installation
+        run: pytest --version  # Проверка, что pytest установлен
+      - name: Run unit tests
+        run: pytest tests  # Запуск тестов
+      - name: Lint with PEP8
+        run: pylint main.py
