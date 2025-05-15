@@ -1,3 +1,6 @@
 streamlit
 deeppavlov
 aiogram
+python-telegram-bot  # Явно указываем установку библиотеки для Telegram
+pytest
+pylint
