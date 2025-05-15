@@ -26,5 +26,10 @@ user_question = st.text_input('Введите ваш вопрос:')
 context_text = st.text_area('Введите текст или контекст, на основе которого будет дан ответ:')
 
 if user_question and context_text:
-    result = qa_pipeline(question=user_question, context=context_text)
-    st.write(f'Ответ: {result["answer"]}')
+    try:
+        result = qa_pipeline(question=user_question, context=context_text)
+        st.write(f'Ответ: {result["answer"]}')
+    except Exception as e:
+        st.error(f'Произошла ошибка: {e}')
+else:
+    st.info('Пожалуйста, введите вопрос и контекст для получения ответа .')
