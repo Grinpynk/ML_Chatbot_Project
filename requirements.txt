@@ -1,6 +1,6 @@
 streamlit
-deeppavlov
+deeppavlov==0.17.1  # Проверенная версия с поддержкой модели tfidf_logreg_en_faq
 aiogram
-python-telegram-bot  # Явно указываем установку библиотеки для Telegram
+python-telegram-bot
 pytest
 pylint
