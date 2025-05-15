@@ -17,12 +17,12 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-          python -m pip install --upgrade pip setuptools wheel  # Обновление pip, setuptools и wheel
+          python -m pip install --upgrade pip
+          python -m pip install setuptools==58.1.0 wheel==0.36.2 cython==0.29.14  # Совместимые версии
       
-      - name: Install Dependencies with Legacy Resolver
+      - name: Install Dependencies
         run: |
           source venv/bin/activate
-          python -m pip install --upgrade pip
           python -m pip install numpy==1.18.0  # Совместимая версия numpy
           python -m pip install -r requirements.txt --use-deprecated=legacy-resolver
       
