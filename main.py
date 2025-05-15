@@ -1,17 +1,24 @@
+"""
+Чат-бот на основе ML (Hugging Face Transformers)
+Разработан для ответов на вопросы на основе заданного текста.
+"""
 
 import streamlit as st
 from transformers import AutoModelForQuestionAnswering, AutoTokenizer, pipeline
 
 st.title('Чат-бот на основе ML (Hugging Face Transformers)')
 
-# Загружаем модель и токенизатор
 @st.cache_resource
 def load_model():
+    """
+    Загружает модель и токенизатор для выполнения задачи вопрос-ответ (Q&A).
+    Возвращает pipeline модели Hugging Face.
+    """
     model_name = "distilbert-base-uncased-distilled-squad"
     model = AutoModelForQuestionAnswering.from_pretrained(model_name)
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    qa_pipeline = pipeline("question-answering", model=model, tokenizer=tokenizer)
-    return qa_pipeline
+    qa_model = pipeline("question-answering", model=model, tokenizer=tokenizer)
+    return qa_model
 
 qa_pipeline = load_model()
 
