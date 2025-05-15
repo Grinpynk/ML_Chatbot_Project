@@ -1,6 +1,8 @@
 streamlit
-deeppavlov==0.17.1  # Проверенная версия с поддержкой модели tfidf_logreg_en_faq
+deeppavlov==0.17.1
 aiogram
 python-telegram-bot
 pytest
 pylint
+numpy==1.21.6  # Совместимая версия numpy для DeepPavlov
+scikit-learn<1.0  # Совместимая версия scikit-learn
