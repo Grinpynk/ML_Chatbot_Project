@@ -11,25 +11,41 @@ jobs:
       - name: Set up Python 3.9
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9  # Принудительно используем Python 3.9
+          python-version: 3.9
       
-      - name: Upgrade pip and install dependencies
+      - name: Debugging Environment Setup
         run: |
+          set -eux  # Включаем полную отладку
+          echo "Проверка версии Python:"
+          python --version
+          echo "Проверка пути pip:"
+          which pip
+          echo "Проверка версии pip:"
+          pip --version
+          echo "Проверка переменных окружения:"
+          env
+      
+      - name: Install Dependencies
+        run: |
+          set -eux  # Включаем полную отладку
           python -m pip install --upgrade pip setuptools wheel  # Обновление pip, setuptools и wheel
           python -m pip install -r requirements.txt
-          python -m pip install pytest  # Устанавливаем pytest
-          python -m pip install pylint  # Устанавливаем pylint
+          python -m pip install pytest pylint  # Явная установка pytest и pylint
       
-      - name: Проверка установленных пакетов
+      - name: Verify Installed Packages
         run: |
+          set -eux  # Включаем полную отладку
           python --version
           pip list
           python -m pytest --version
+          python -m pylint --version
       
-      - name: Запуск тестов
+      - name: Run Unit Tests
         run: |
+          set -eux  # Включаем полную отладку
           python -m pytest tests  # Явный запуск через python -m
       
-      - name: Проверка стиля кода (PEP8)
+      - name: Run Lint (PEP8)
         run: |
+          set -eux  # Включаем полную отладку
           python -m pylint main.py
