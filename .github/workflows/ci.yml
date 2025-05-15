@@ -7,18 +7,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: 3.9
-      - name: Install dependencies
+      
+      - name: Upgrade pip and install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest  # Установка pytest явно
-      - name: Verify pytest installation
-        run: pytest --version  # Проверка, что pytest установлен
+          python -m pip install -r requirements.txt
+          python -m pip install pytest  # Установка pytest явно
+      
+      - name: Verify Python and Pytest
+        run: |
+          python --version
+          pip list
+          python -m pytest --version  # Проверка установки pytest
+      
       - name: Run unit tests
-        run: pytest tests  # Запуск тестов
+        run: python -m pytest tests  # Явный вызов через python -m
+      
       - name: Lint with PEP8
-        run: pylint main.py
+        run: python -m pip install pylint && pylint main.py
