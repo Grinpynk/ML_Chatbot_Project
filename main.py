@@ -29,7 +29,11 @@ if user_question and context_text:
     try:
         result = qa_pipeline(question=user_question, context=context_text)
         st.write(f'Ответ: {result["answer"]}')
-    except Exception as e:
-        st.error(f'Произошла ошибка: {e}')
+    except ValueError:
+        st.error('Ошибка: некорректный ввод данных. Проверьте вопрос и контекст.')
+    except RuntimeError:
+        st.error('Ошибка: не удалось загрузить модель. Попробуйте позже.')
+    except KeyError:
+        st.error('Ошибка: проблема с обработкой ответа. Попробуйте изменить вопрос.')
 else:
-    st.info('Пожалуйста, введите вопрос и контекст для получения ответа .')
+    st.info('Пожалуйста, введите вопрос и контекст для получения ответа.')
