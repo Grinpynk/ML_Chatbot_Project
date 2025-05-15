@@ -7,35 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: 3.9
-
-      - name: Create and activate virtual environment
+      - name: Install dependencies
         run: |
-          python -m venv venv  # Создаём виртуальную среду
-          source venv/bin/activate  # Активируем (Linux)
           python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
-          python -m pip install pytest  # Устанавливаем pytest
-          echo "VENV_PATH=$PWD/venv" >> $GITHUB_ENV  # Сохраняем путь к виртуальной среде
-
-      - name: Verify Python and Pytest
-        run: |
-          source $VENV_PATH/bin/activate  # Активируем виртуальную среду
-          python --version
-          pip list
-          python -m pytest --version  # Проверка установки pytest
-      
+          pip install -r requirements.txt
+          pip install pytest  # Установка pytest явно
+      - name: Verify pytest installation
+        run: pytest --version  # Проверка, что pytest установлен
       - name: Run unit tests
-        run: |
-          source $VENV_PATH/bin/activate  # Активируем виртуальную среду
-          python -m pytest tests  # Запуск тестов
-      
+        run: pytest tests  # Запуск тестов
       - name: Lint with PEP8
-        run: |
-          source $VENV_PATH/bin/activate  # Активируем виртуальную среду
-          python -m pip install pylint
-          pylint main.py
+        run: pylint main.py
