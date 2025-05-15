@@ -17,14 +17,13 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-          python -m pip install --upgrade pip setuptools==58.1.0 wheel==0.36.2
-          python -m pip install cython==0.29.14  # Совместимая версия для сборки
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install numpy==1.21.6  # Совместимая версия numpy
 
-      - name: Install Dependencies (DeepPavlov + numpy)
+      - name: Install Dependencies (DeepPavlov)
         run: |
           source venv/bin/activate
-          python -m pip install numpy==1.18.0 --only-binary=:all:  # Предварительно скомпилированный пакет
-          python -m pip install deeppavlov==0.17.1  # Установка DeepPavlov отдельно
+          python -m pip install deeppavlov --no-deps  # Установка без зависимостей
           python -m pip install -r requirements.txt
 
       - name: Verify Installed Packages
